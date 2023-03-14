@@ -92,9 +92,15 @@ const displayController = (() => {
     boardsizeInput.required = true;
     boardsizeDiv.appendChild(boardsizeInput);
 
+    const buttonDiv = document.createElement("div");
+    buttonDiv.classList.add("form-section");
+    form.appendChild(buttonDiv);
+
     const submitButton = document.createElement("button");
     submitButton.type = "submit";
     submitButton.textContent = "Start Game";
+    buttonDiv.appendChild(submitButton);
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
@@ -118,7 +124,6 @@ const displayController = (() => {
       callback(settings);
     });
 
-    form.appendChild(submitButton);
     document.body.appendChild(formDiv);
   };
 
