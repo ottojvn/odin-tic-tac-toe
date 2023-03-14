@@ -28,7 +28,9 @@ const gameboard = ((size) => {
     return checkLines() || checkColumns();
   };
 
-  return { markSpot, checkWin, reset };
+  const getPos = (x, y) => board[x][y];
+
+  return { markSpot, checkWin, reset, getPos };
 })();
 
 export { gameboard };

@@ -7,6 +7,7 @@ const game = (() => {
   let activePlayer = null;
 
   const getPlayer = () => activePlayer;
+
   const playRound = (x, y) => {
     gameboard.markSpot(x, y, activePlayer.getSymbol());
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
@@ -24,25 +25,27 @@ const game = (() => {
     ];
   };
 
-  const configGame = () => {
+  const setupGame = () => {
     displayController.renderForm(startGame);
   };
 
-  const startGame = (players) => {
-    createPlayers(players);
+  const startGame = (settings) => {
+    createPlayers(settings.players);
+    const gameboard = gameboard(settings.boardSize);
+    gameboard.reset();
     displayController.renderBoard(gameboard);
     /*while (!gameboard.checkWin()) {
       displayController.updateBoard(gameboard, playRound);
     }
     winner = activePlayer === players[0] ? players[1] : players[0];
-    gameover(winner);*/
+    finishGame(winner);*/
   };
 
-  const gameover = (winner) => {
-    displayController.renderWinner(winner, configGame);
+  const finishGame = (winner) => {
+    displayController.renderWinner(winner, setupGame);
   };
 
-  return { getPlayer, configGame };
+  return { setupGame };
 })();
 
-game.configGame();
+game.setupGame();
