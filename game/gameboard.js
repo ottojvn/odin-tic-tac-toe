@@ -1,9 +1,11 @@
-const gameboard = ((size) => {
-  const board = [];
+const gameboard = (() => {
+  let board = [];
 
-  const reset = () => (board = Array(size).fill(Array(size).fill(None)));
+  const setPos = (x, y, symbol) => (board[x][y] = symbol);
 
-  const markSpot = (x, y, symbol) => (board[x][y] = symbol);
+  const getPos = (x, y) => board[x][y];
+
+  const reset = (size) => (board = Array(size).fill(Array(size).fill(null)));
 
   const checkLines = () => {
     for (let row = 0; row < size; row++) {
@@ -18,6 +20,7 @@ const gameboard = ((size) => {
     }
     return false;
   };
+
   const checkColumns = () => {
     return board.some((col) =>
       col.every((symbol, _i, col) => symbol == col[0])
@@ -28,9 +31,7 @@ const gameboard = ((size) => {
     return checkLines() || checkColumns();
   };
 
-  const getPos = (x, y) => board[x][y];
-
-  return { markSpot, checkWin, reset, getPos };
+  return { setPos, getPos, reset, checkWin };
 })();
 
 export { gameboard };
