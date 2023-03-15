@@ -5,37 +5,42 @@ import { displayController } from "./displayController.js";
 const game = (() => {
   let players = [];
   let activePlayer = null;
-
-  const getPlayer = () => activePlayer;
+  let rounds;
 
   const playRound = (x, y) => {
-    gameboard.markSpot(x, y, activePlayer.getSymbol());
+    rounds++;
     activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    gameboard.setPos(x, y, activePlayer.getSymbol());
+    displayController.updateBoard(gameboard, x, y);
+
+    const win = gameboard.checkWin();
+    console.log(win);
+    if (win != "") {
+      console.log(`${activePlayer.getName()} is the winner!`);
+    } else if (rounds === gameboard.length ** 2) {
+      console.log("It's a tie");
+    }
   };
 
   const createPlayers = ([
-    { player1name, player1ai },
-    { player2name, player2ai },
+    { player1Name, player1ai },
+    { player2Name, player2ai },
   ]) => {
     players = [
-      player(player1name, player1ai, "x"),
-      player(player2name, player2ai, "o"),
+      player(player1Name, player1ai, "x"),
+      player(player2Name, player2ai, "o"),
     ];
   };
 
   const setupGame = () => {
     displayController.renderForm(startGame);
+    rounds = 0;
   };
 
   const startGame = (settings) => {
     createPlayers(settings.players);
     gameboard.reset(settings.boardsize);
-    displayController.renderBoard(gameboard);
-    /*while (!gameboard.checkWin()) {
-      displayController.updateBoard(gameboard, playRound);
-    }
-    winner = activePlayer === players[0] ? players[1] : players[0];
-    finishGame(winner);*/
+    displayController.renderBoard(gameboard, playRound);
   };
 
   const finishGame = (winner) => {

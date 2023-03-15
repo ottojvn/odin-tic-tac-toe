@@ -1,0 +1,33 @@
+#board {
+  display: grid;
+  grid-template-columns: repeat(var(--size), minmax(100px, 1fr));
+  grid-template-rows: repeat(var(--size), minmax(100px, 1fr));
+  width: min(75vh, 75vw);
+  height: min(75vh, 75vw);
+  max-width: 1000px;
+  max-height: 1000px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+.board-cell {
+  max-width: calc(min(min(90vh, 90vw), 1000px) / var(--size));
+  max-height: calc(min(min(90vh, 90vw), 1000px) / var(--size));
+  margin: 0px;
+  font-family: "Courier New";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 6rem;
+  font-weight: bold;
+  background-color: white;
+  transition: background-color 0.3s ease-in-out;
+  transition: scale 0.1s;
+  transition: box-shadow 0.1s;
+}
+
+.board-cell:not(.played):hover {
+  transform: scale(1.15);
+  box-shadow: 0px 0px 10px black;
+  background-color: lightgray;
+}

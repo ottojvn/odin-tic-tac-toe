@@ -1,4 +1,6 @@
 const displayController = (() => {
+  let lastPlayed = "o";
+
   const clean = () => {
     const game = document.body.querySelector("#game");
     if (game != null) {
@@ -74,6 +76,7 @@ const displayController = (() => {
       playerTypeBotDiv.appendChild(playerTypeBotLabel);
     }
 
+    /*
     const boardsizeDiv = document.createElement("div");
     boardsizeDiv.classList.add("form-section");
     form.appendChild(boardsizeDiv);
@@ -91,6 +94,7 @@ const displayController = (() => {
     boardsizeInput.value = "3";
     boardsizeInput.required = true;
     boardsizeDiv.appendChild(boardsizeInput);
+    */
 
     const buttonDiv = document.createElement("div");
     buttonDiv.classList.add("form-section");
@@ -113,25 +117,86 @@ const displayController = (() => {
       const player2ai =
         form.querySelector('input[type="radio"][name="player-2-type"]:checked')
           .value == "bot";
+      /*
       const boardsize = parseInt(
         form.querySelector('input[type="number"][name="boardsize"]').value
       );
+      */
       settings.players = [
         { player1Name, player1ai },
         { player2Name, player2ai },
       ];
-      settings.boardsize = boardsize;
+      // settings.boardsize = boardsize;
+      settings.boardsize = 3;
       callback(settings);
     });
 
     document.body.appendChild(formDiv);
   };
 
-  const renderBoard = () => {
+  const renderBoard = (gameboard, callback) => {
     clean();
+
+    const gameDiv = document.createElement("div");
+    gameDiv.id = "game";
+    document.body.appendChild(gameDiv);
+
+    const boardDiv = document.createElement("div");
+    boardDiv.id = "board";
+    boardDiv.setAttribute("style", `--size: ${gameboard.getSize()}`);
+    gameDiv.appendChild(boardDiv);
+
+    for (let x = 0; x < gameboard.getSize(); x++) {
+      for (let y = 0; y < gameboard.getSize(); y++) {
+        const cell = document.createElement("div");
+        cell.classList.add("board-cell");
+        cell.id = `board-cell-${x}-${y}`;
+
+        cell.addEventListener("mouseenter", (event) => {
+          event.preventDefault();
+          if (!cell.classList.contains("played")) {
+            cell.textContent = lastPlayed == "x" ? "O" : "X";
+            cell.style = "color: rgba(138, 0, 0, 0.5)";
+          }
+        });
+        cell.addEventListener("mouseleave", (event) => {
+          event.preventDefault();
+          if (!cell.classList.contains("played")) {
+            cell.textContent = "";
+            cell.removeAttribute("style");
+          }
+        });
+
+        cell.addEventListener("click", (event) => {
+          event.preventDefault();
+          cell.removeAttribute("style");
+          callback(x, y);
+        });
+
+        boardDiv.appendChild(cell);
+      }
+    }
   };
 
-  return { renderForm, renderBoard };
+  const updateBoard = (board, x, y) => {
+    const cell = document.body.querySelector(`div#board-cell-${x}-${y}`);
+    lastPlayed = board.getPos(x, y);
+    cell.textContent = lastPlayed.toUpperCase();
+    cell.classList.add("played");
+  };
+
+  const renderWinner = (winner) => {
+    clean();
+
+    const gameDiv = document.createElement("div");
+    gameDiv.id = "game";
+    document.body.appendChild(gameDiv);
+
+    const winnerText = document.createElement("p");
+    winnerText.textContent = `${winner.getName()} is the winner!`;
+  };
+
+  return { renderForm, renderBoard, updateBoard, renderWinner };
 })();
 
 export { displayController };
