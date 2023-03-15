@@ -14,7 +14,6 @@ const game = (() => {
     displayController.updateBoard(gameboard, x, y);
 
     const win = gameboard.checkWin();
-    console.log(win);
     if (win != "") {
       console.log(`${activePlayer.getName()} is the winner!`);
     } else if (rounds === gameboard.length ** 2) {

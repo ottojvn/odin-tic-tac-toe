@@ -167,11 +167,14 @@ const displayController = (() => {
           }
         });
 
-        cell.addEventListener("click", (event) => {
+        const handleClick = (event) => {
           event.preventDefault();
           cell.removeAttribute("style");
           callback(x, y);
-        });
+          event.target.removeEventListener("click", handleClick);
+        };
+
+        cell.addEventListener("click", handleClick);
 
         boardDiv.appendChild(cell);
       }

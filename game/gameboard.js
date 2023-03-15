@@ -24,7 +24,6 @@ const gameboard = (() => {
     // Lines
     for (let i = 0; i < size; i++) {
       const row = board[i];
-      console.log(row);
       if (row.every((cell) => cell === row[0] && cell !== null)) {
         return `L${i}`;
       }
@@ -33,7 +32,6 @@ const gameboard = (() => {
     // Columns
     for (let j = 0; j < size; j++) {
       const col = board.map((row) => row[j]);
-      console.log(col);
       if (col.every((cell) => cell === col[0] && cell !== null)) {
         return `C${j}`;
       }
