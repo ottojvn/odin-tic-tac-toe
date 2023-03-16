@@ -19,7 +19,7 @@ const game = (() => {
         { winner: activePlayer, condition: win },
         setupGame
       );
-    } else if (rounds === gameboard.length ** 2) {
+    } else if (rounds === gameboard.getSize() ** 2) {
       displayController.renderWinner(
         { winner: null, condition: "tie" },
         setupGame

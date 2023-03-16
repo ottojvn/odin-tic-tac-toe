@@ -190,7 +190,6 @@ const displayController = (() => {
 
   const renderWinner = (status, callback) => {
     const game = document.body.querySelector("#game");
-    console.log(game);
     game.querySelector("#board").classList.add("disable");
 
     const winTextDiv = document.createElement("div");
