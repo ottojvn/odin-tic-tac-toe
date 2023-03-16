@@ -15,9 +15,15 @@ const game = (() => {
 
     const win = gameboard.checkWin();
     if (win != "") {
-      console.log(`${activePlayer.getName()} is the winner!`);
+      displayController.renderWinner(
+        { winner: activePlayer, condition: win },
+        setupGame
+      );
     } else if (rounds === gameboard.length ** 2) {
-      console.log("It's a tie");
+      displayController.renderWinner(
+        { winner: null, condition: "tie" },
+        setupGame
+      );
     }
   };
 
@@ -40,10 +46,6 @@ const game = (() => {
     createPlayers(settings.players);
     gameboard.reset(settings.boardsize);
     displayController.renderBoard(gameboard, playRound);
-  };
-
-  const finishGame = (winner) => {
-    displayController.renderWinner(winner, setupGame);
   };
 
   return { setupGame };

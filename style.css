@@ -1,5 +1,9 @@
 #board {
   display: grid;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 0);
   grid-template-columns: repeat(var(--size), minmax(100px, 1fr));
   grid-template-rows: repeat(var(--size), minmax(100px, 1fr));
   width: min(75vh, 75vw);
@@ -30,4 +34,52 @@
   transform: scale(1.15);
   box-shadow: 0px 0px 10px black;
   background-color: lightgray;
+}
+
+#game {
+  position: relative;
+}
+
+.disable {
+  transition: filter 0.1s ease-in;
+  filter: blur(2px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+#winner-div {
+  text-align: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 2;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+#winner {
+  font-family: sans-serif;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 0 10px black;
+}
+
+#play-again {
+  color: white;
+  font-family: sans-seric;
+  font-size: 2rem;
+  text-shadow: 0 0 5px darkblue;
+  animation: fadeIn 3s;
+}
+
+@keyframes fadeIn {
+  0%,
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

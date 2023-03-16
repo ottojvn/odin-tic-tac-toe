@@ -188,15 +188,36 @@ const displayController = (() => {
     cell.classList.add("played");
   };
 
-  const renderWinner = (winner) => {
-    clean();
+  const renderWinner = (status, callback) => {
+    const game = document.body.querySelector("#game");
+    console.log(game);
+    game.querySelector("#board").classList.add("disable");
 
-    const gameDiv = document.createElement("div");
-    gameDiv.id = "game";
-    document.body.appendChild(gameDiv);
+    const winTextDiv = document.createElement("div");
+    winTextDiv.id = "winner-div";
+    game.appendChild(winTextDiv);
 
-    const winnerText = document.createElement("p");
-    winnerText.textContent = `${winner.getName()} is the winner!`;
+    const winText = document.createElement("p");
+    winText.id = "winner";
+    winTextDiv.appendChild(winText);
+
+    const restart = document.createElement("p");
+    restart.textContent = "Click anywhere to restart";
+    restart.id = "play-again";
+    winTextDiv.appendChild(restart);
+
+    if (status.condition === "tie") {
+      winText.textContent = "It's a tie!";
+    } else {
+      winText.textContent = `${status.winner.getName()} is the winner!`;
+    }
+
+    setTimeout(() => {
+      game.addEventListener("click", (event) => {
+        event.preventDefault();
+        callback();
+      });
+    }, 3000);
   };
 
   return { renderForm, renderBoard, updateBoard, renderWinner };
