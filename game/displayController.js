@@ -60,6 +60,7 @@ const displayController = (() => {
       playerTypeHumanLabel.textContent = "Player";
       playerTypeHumanDiv.appendChild(playerTypeHumanLabel);
 
+      /*
       const playerTypeBotDiv = document.createElement("div");
       playerTypeBotDiv.classList.add("player-type-bot-div");
       playerTypeDiv.appendChild(playerTypeBotDiv);
@@ -74,6 +75,7 @@ const displayController = (() => {
       playerTypeBotLabel.for = `player-${i}-type`;
       playerTypeBotLabel.textContent = "Bot";
       playerTypeBotDiv.appendChild(playerTypeBotLabel);
+*/
     }
 
     /*
